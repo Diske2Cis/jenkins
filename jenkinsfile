@@ -15,10 +15,12 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo 'Instalando herramientas de seguridad...'
-                sh 'pip3 install -r requirements.txt'
-                
-                echo 'Ejecutando análisis estático con Bandit...'
-                sh 'python3 -m bandit -r . || true'
+                sh '''
+                    sudo yum install -y python3 python3-pip
+                    sudo pip3 install -r requirements.txt
+                    echo "Ejecutando análisis estático con Bandit..."
+                    sudo python3 -m bandit -r . || true
+                '''
             }
         }
     }
